@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -23,26 +24,24 @@ import static springfox.documentation.builders.RequestHandlerSelectors.withMetho
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String PATH = ".*db.*";
-
     @Autowired
     private AppProperties appProperties;
 
     @Bean
     public Docket mainApi() {
-        return getCommonDocketBuilder(appProperties.getSwaggerProperties().getGroup(), PATH).build()
+        return getCommonDocketBuilder(appProperties.getSwaggerProperties().getGroup()).build()
                 .useDefaultResponseMessages(false); // Do NOT use default response messages (otherwise, it adds 201 and other responses to Swagger docs)
     }
 
 
-    private ApiSelectorBuilder getCommonDocketBuilder(String groupName, String subPath) {
+    private ApiSelectorBuilder getCommonDocketBuilder(String groupName) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName(groupName)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(withClassAnnotation(Api.class))
                 .apis(withMethodAnnotation(ApiOperation.class))
-                .paths(regex(PATH));
+                .paths(PathSelectors.any());
     }
 
     private ApiInfo apiInfo() {

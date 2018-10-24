@@ -1,6 +1,7 @@
 package com.gary.demo.crud.entity;
 
 import com.google.common.base.MoreObjects;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -12,7 +13,7 @@ public class Person {
     @Column(name = "ID", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSON_ID_SEQ")
     @SequenceGenerator(sequenceName = "PERSON_ID_SEQ", initialValue = 1, allocationSize = 1, name = "PERSON_ID_SEQ")
-    private String id;
+    private Long id;
 
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -20,17 +21,28 @@ public class Person {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    public Person(String id, String firstName, String lastName) {
+    public Person(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    public Person(String id, String firstName, String lastName) {
+        if(!StringUtils.isEmpty(id)){
+            this.id = Long.parseLong(id);
+        }
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
-    public String getId() {
+    public Person(){
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
