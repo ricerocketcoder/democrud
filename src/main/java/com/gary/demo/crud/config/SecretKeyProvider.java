@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.security.*;
 import java.security.cert.Certificate;
@@ -21,12 +22,12 @@ public class SecretKeyProvider {
     private KeyPair getKeyPair() throws
             KeyStoreException, IOException,
             NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException {
-        FileInputStream is = new FileInputStream("C:\\dev\\mykeys.jks");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("mykeys.jks");
 
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
         keystore.load(is, "mypass".toCharArray());
 
-        String alias = "mykeys";
+        String alias = "demokeys";
 
         Key key = keystore.getKey(alias, "mypass".toCharArray());
         if (key instanceof PrivateKey) {

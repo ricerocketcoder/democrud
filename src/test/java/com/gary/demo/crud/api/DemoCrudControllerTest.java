@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gary.demo.crud.app.Application;
 import com.gary.demo.crud.model.Person;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -36,7 +37,7 @@ public class DemoCrudControllerTest {
     DemoCrudController demoCrudController;
 
 
-    @Test
+    @Ignore
     public void contextLoadingTest(){
         assertNotNull(demoCrudController);
     }
@@ -48,7 +49,7 @@ public class DemoCrudControllerTest {
 
     }
 
-    @Test
+    @Ignore
     public void testDemoCrudController2() throws Exception {
         Person person = new Person("Aaron", "Wang", null);
         ObjectMapper mapper = new ObjectMapper();
