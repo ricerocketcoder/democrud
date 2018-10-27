@@ -3,24 +3,25 @@ Introduction:
 Below is a summary of what are the applications in this repository:
 
 1. A microserverice developed using Spring Boot framework and follows the MVC architectural pattern
-	2. It has an embedded tomcat server and can be run as a standalone app, or it can be deployed in an application container
-	3. It uses JPA and Hibernate for database access
-	4. It's a RESTful service and has the following 4 operations:  POST (create), GET (read), PUT (update), DELETE (delete)
-	5. It has a SWAGGER UI that describes the API and can be used to facilitate testing/integration
-	6. The endpoint is protected by oauth2, only the true resource owner can access the resource
 
-7. An Authentication server that implements Oauth2 framework, it acts as the authentication authority and is responsible for issuing access tokens
-	8. The server is implemented using Spring Boot Security
-	9. Tokens are generated using JWT standard
-	10. Each token is signed using asymmetric key, where the key pair was generated using SHA 256 Hash Algorithm
+- It has an embedded tomcat server and can be run as a standalone app, or it can be deployed in an application containerI
+- It uses JPA and Hibernate for database access
+- It's a RESTful service and has the following 4 operations:  POST (create), GET (read), PUT (update), DELETE (delete)
+- It has a SWAGGER UI that describes the API and can be used to facilitate testing/integration
+- The endpoint is protected by oauth2, only the true resource owner can access the resource
+
+2. An Authentication server that implements Oauth2 framework, it acts as the authentication authority and is responsible for issuing access tokens
+- server is implemented using Spring Boot Security
+- Tokens are generated using JWT standard
+- Each token is signed using asymmetric key, where the key pair was generated using SHA 256 Hash Algorithm
 	
-11. The goal is to demonstrate
-	12. Microservices that can be standup'd and torn down as needed
-	13. The "password" grant flow of Oauth2
-	14. stateless JWT authentication
-	15. authorization based on user roles
-	16. Token expiration
-	17. Using the refresh token
+3. The goal is to demonstrate
+- Microservices that can be standup'd and torn down as needed
+- The "password" grant flow of Oauth2
+- stateless JWT authentication
+- authorization based on user roles
+- Token expiration
+- Using the refresh token
 	
 
 
