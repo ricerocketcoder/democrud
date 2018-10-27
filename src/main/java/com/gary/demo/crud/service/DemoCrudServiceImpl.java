@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,7 @@ public class DemoCrudServiceImpl implements DemoCrudService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Person> updatePerson(Person person) {
         if(StringUtils.isEmpty(person.getId())){
             throw new ValidationException("Missing ID");
@@ -59,6 +61,7 @@ public class DemoCrudServiceImpl implements DemoCrudService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Person> deletePerson(String id) {
         if(StringUtils.isEmpty(id)){
             throw new ValidationException("Missing ID");
