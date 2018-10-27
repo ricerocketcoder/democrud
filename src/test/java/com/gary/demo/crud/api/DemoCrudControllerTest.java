@@ -41,7 +41,7 @@ public class DemoCrudControllerTest {
     public void contextLoadingTest(){
         assertNotNull(demoCrudController);
     }
-    @Test
+    @Ignore
     public void testDemoCrudController1() throws Exception {
         MvcResult result =this.mockMvc.perform(get("/gary/demo/crud/v1/person?id=1")).andDo(print()).andExpect(status().is4xxClientError()).andReturn();
         String resultString = result.getResponse().getContentAsString();
@@ -61,6 +61,15 @@ public class DemoCrudControllerTest {
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().is2xxSuccessful()).andReturn();
+        String resultString = result.getResponse().getContentAsString();
+        System.out.println("Gary Demo: " + resultString);
+
+    }
+
+
+    @Test
+    public void testDemoCrudController3() throws Exception {
+        MvcResult result =this.mockMvc.perform(get("/gary/demo/crud/v1/person?id=1").header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZGVtb2NydWQiXSwidXNlcl9uYW1lIjoidXNlciIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE1NDA2OTU2NDEsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJhZDg1Y2I1Zi0zNGVmLTQ2MjctYTJiNC1mMDMxNTQ3ZWY4ZjgiLCJjbGllbnRfaWQiOiJ0cnVzdGVkLWFwcCJ9.mcj2oQkniWMZBakk5OCfPenD90mQEcD7meZsDmD1CZM")).andDo(print()).andExpect(status().is4xxClientError()).andReturn();
         String resultString = result.getResponse().getContentAsString();
         System.out.println("Gary Demo: " + resultString);
 

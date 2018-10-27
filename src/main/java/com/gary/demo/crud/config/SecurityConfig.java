@@ -11,8 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,6 +19,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 
 
 @Configuration
@@ -74,10 +74,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         try {
             converter.setSigningKey(keyProvider.getKey());
+            converter.setJwtClaimsSetVerifier(customJwtClaimVerifier());
         } catch (URISyntaxException | KeyStoreException | NoSuchAlgorithmException | IOException | UnrecoverableKeyException | CertificateException e) {
             e.printStackTrace();
         }
 
         return converter;
+    }
+
+
+
+    @Bean
+    public JwtClaimsSetVerifier customJwtClaimVerifier() {
+        return new CustomClaimVerifier();
     }
 }
