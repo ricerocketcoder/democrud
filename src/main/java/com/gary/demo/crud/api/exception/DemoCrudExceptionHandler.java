@@ -1,5 +1,6 @@
 package com.gary.demo.crud.api.exception;
 
+import com.gary.demo.crud.model.PersonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,13 +14,13 @@ public class DemoCrudExceptionHandler {
 
     @ExceptionHandler(value = { DataNotFoundException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity dataNotFoundException(Exception ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public PersonResponse dataNotFoundException(Exception ex, HttpServletRequest request) {
+        return new PersonResponse(HttpStatus.NOT_FOUND, "Data Not Found");
     }
 
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity applicationException(Exception ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    public PersonResponse applicationException(Exception ex, HttpServletRequest request) {
+        return new PersonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Sever Error");
     }
 }

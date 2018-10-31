@@ -54,7 +54,7 @@ public class SwaggerConfig {
 
         return getCommonDocketBuilder(appProperties.getSwaggerProperties().getGroup()).build()
                 //.securitySchemes(Collections.singletonList(securitySchema()))
-                .apiInfo(apiInfo()).securitySchemes(Lists.newArrayList(apiKey()))
+                .securitySchemes(Lists.newArrayList(apiKey()))
                 .useDefaultResponseMessages(false); // Do NOT use default response messages (otherwise, it adds 201 and other responses to Swagger docs)
     }
 
@@ -71,33 +71,10 @@ public class SwaggerConfig {
     }
 
 
-   /* private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
+   private ApiKey apiKey() {
+        return new ApiKey("apiKey", "Authorization", "header");
     }
 
-    @Bean
-    public SecurityConfiguration securityInfo() {
-        return SecurityConfigurationBuilder.builder()
-                .clientId("user")
-                .clientSecret("password")
-                .realm(null)
-                .appName("democrud")
-                .
-                .scopeSeparator(",")
-                .additionalQueryStringParams(null)
-                .useBasicAuthenticationWithAccessCodeGrant(false)
-                .build();
-    }
-
-
-    @Bean
-    public SecurityConfiguration security() {
-        return new SecurityConfiguration(null, // "client id",
-                null, // "client secret",
-                null, // "realm",
-                null, // "app",
-                "Bearer " + yourToken, ApiKeyVehicle.HEADER, "Authorization", "," /* scope separator */);
-    }*/
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
