@@ -1,16 +1,11 @@
 package com.gary.demo.crud.api;
 
 import com.gary.demo.crud.model.Person;
+import com.gary.demo.crud.model.PersonResponse;
 import com.gary.demo.crud.service.DemoCrudService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,56 +21,68 @@ public class DemoCrudController {
 
     @ApiOperation( value = "Get Person",
             notes = "Get the detail of a person with a given ID",
-            nickname = "getPerson")
+            nickname = "getPerson",
+            authorizations = {@Authorization(value="apiKey")})
     @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = Person.class),
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = PersonResponse.class),
             @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "Missing ID"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Data Not Found"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
     @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> getPerson(@RequestParam(value="id", required=true) String id){
-        return demoCrudService.getPerson(id);
+    public PersonResponse getPerson(@RequestParam(value="id", required=true) String id, HttpServletResponse response){
+        PersonResponse personResponse = demoCrudService.getPerson(id);
+        response.setStatus(personResponse.getResponseStatus().value());
+        return personResponse;
     }
 
 
     @ApiOperation( value = "Create Person",
             notes = "create a person in database",
-            nickname = "createPerson")
+            nickname = "createPerson",
+            authorizations = {@Authorization(value="apiKey")})
     @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_CREATED, message = "Success", response = Person.class),
+            @ApiResponse(code = HttpServletResponse.SC_CREATED, message = "Success", response = PersonResponse.class),
             @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "Missing data"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
     @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> createPerson(@RequestBody Person person){
-        return demoCrudService.createPerson(person);
+    public PersonResponse createPerson(@RequestBody Person person, HttpServletResponse response){
+        PersonResponse personResponse = demoCrudService.createPerson(person);
+        response.setStatus(personResponse.getResponseStatus().value());
+        return personResponse;
     }
 
     @ApiOperation( value = "Update Person",
             notes = "update a person in database",
-            nickname = "updatePerson")
+            nickname = "updatePerson",
+            authorizations = {@Authorization(value="apiKey")})
     @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = Person.class),
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = PersonResponse.class),
             @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "Missing ID"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
     @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> updatePerson(@RequestBody Person person){
-        return demoCrudService.updatePerson(person);
+    public PersonResponse updatePerson(@RequestBody Person person, HttpServletResponse response){
+        PersonResponse personResponse = demoCrudService.updatePerson(person);
+        response.setStatus(personResponse.getResponseStatus().value());
+        return personResponse;
     }
 
     @ApiOperation( value = "Delete Person",
             notes = "Delete the person from database",
-            nickname = "deletePerson")
+            nickname = "deletePerson",
+            authorizations = {@Authorization(value="apiKey")})
     @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = Person.class),
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Success", response = PersonResponse.class),
             @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "Missing ID"),
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Data Not Found"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
     @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> updatePerson(@RequestParam(value="id", required=true) String id){
-        return demoCrudService.deletePerson(id);
+    public PersonResponse updatePerson(@RequestParam(value="id", required=true) String id, HttpServletResponse response){
+        PersonResponse personResponse = demoCrudService.deletePerson(id);
+        response.setStatus(personResponse.getResponseStatus().value());
+        return personResponse;
     }
 }
