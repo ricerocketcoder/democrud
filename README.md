@@ -35,8 +35,10 @@ How to use it:
 	- you should see 2 exceptions at start up because the app is dropping table and sequence that doesn't exist in database yet
 	- democrud app runs behind port 9080
 	
-3. start the democrud_not_secure app : java-Dserver.port=9082 -jar democrud_not_secure.jar
-	- Since democrud is not protected, you can no longer accsss anything without first authenticating with the oauth2 server therefore a 2nd one that is not secure has to be started to demonstrate swagger-ui and other things
+3. You can either skip to step 5 if you want to use curl/postman/soapui
+   or you can test from the swagger-ui: http://localhost:9080/swagger-ui.html
+
+4. To use the swagger UI, first follow step 7 to get a token.  The click on the "Authorize" button on the top right.  Enter "Bear <token>".  -> click authorize -> click done.  Now you have 2 minutes to try out all the APIs before the token needs to be renewed again.
 
 5. Get "person" information without a access token, and receive a HTTP 403 Access Denid (forbidden)
 curl -X GET \
@@ -44,14 +46,14 @@ curl -X GET \
   -H 'cache-control: no-cache' \
   -H 'postman-token: 7d9dd910-e7b3-ce89-e35d-6e2ea890cf06'
 	
-5. Get "person" information with wrong token, and receive a HTTP 401 Unauthorized
+6. Get "person" information with wrong token, and receive a HTTP 401 Unauthorized
 curl -X GET \
   'http://localhost:9080/gary/demo/crud/v1/person?id=1' \
   -H 'authorization: Bearer abcd' \
   -H 'cache-control: no-cache' \
   -H 'postman-token: 7b589a40-7d16-9f3d-25c2-d74a805a6aa5'
 
-4. To get a token, use the following CURL command:
+7. To get a token, use the following CURL command:
 curl -X POST \
   http://democrud:123password@localhost:9081/oauth/token \
   -H 'cache-control: no-cache' \
@@ -60,7 +62,7 @@ curl -X POST \
   -d 'grant_type=password&username=user&password=password'
   
   
-5. Create a "person" in the database (replace the token below with a valid one)
+8. Create a "person" in the database (replace the token below with a valid one)
 curl -X POST \
   http://localhost:9080/gary/demo/crud/v1/person \
   -H 'authorization: Bearer <access token goes here>' \
@@ -73,7 +75,7 @@ curl -X POST \
 }'
 
 
-6. Get "person" using a valid token (becareful, token expires in 2 minutes)
+9. Get "person" using a valid token (becareful, token expires in 2 minutes)
 curl -X GET \
   'http://localhost:9080/gary/demo/crud/v1/person?id=1' \
   -H 'authorization: Bearer <access token goes here>' \
@@ -81,9 +83,8 @@ curl -X GET \
   -H 'postman-token: bcaa4b77-8f71-3b83-b011-d6ecf5096fa8'
 
   
-7. wait 2 minutes, then execute the GET again, you should receive a 401
-
-8. Obtain a new access token using the refresh token
+10. wait 2 minutes, then execute the GET again, you should receive a 401
+11. Obtain a new access token using the refresh token
 curl -X POST \
   http://democrud:123password@localhost:9081/oauth/token \
   -H 'cache-control: no-cache' \
@@ -91,6 +92,6 @@ curl -X POST \
   -H 'postman-token: 2c850596-0c52-5de8-06ee-6245b7224b62' \
   -d 'grant_type=refresh_token&refresh_token=<refresh token goes here>'
   
-9. Get person again using the token obtained from step 8
+12. Get person again using the token obtained from step 8
 
-10. go to https://jwt.io/ to decode the token and see what is inside
+13. go to https://jwt.io/ to decode the token and see what is inside
