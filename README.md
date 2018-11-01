@@ -32,7 +32,7 @@ How to use it:
 	- you should not see any exception at start up
 	- authentication server runs behind port 9081
 2. start the democrud app: java -jar democrud-1.0-SNAPSHOT.jar
-	- you should see 2 exceptions at start up because the app is dropping table and sequence that doesn't exist in database yet
+	- you should not see any exception at start up
 	- democrud app runs behind port 9080
 	
 3. You can either skip to step 5 if you want to use curl/postman/soapui
