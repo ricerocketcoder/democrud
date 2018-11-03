@@ -6,6 +6,7 @@ import com.gary.demo.crud.service.DemoCrudService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,7 @@ public class DemoCrudController {
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
     @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public PersonResponse getPerson(@RequestParam(value="id", required=true) String id, HttpServletResponse response){
         PersonResponse personResponse = demoCrudService.getPerson(id);
         response.setStatus(personResponse.getResponseStatus().value());
@@ -79,7 +81,7 @@ public class DemoCrudController {
             @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Data Not Found"),
             @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Unknown Error")
     })
-    @RequestMapping(value = "/gary/demo/crud/v1/person", method= RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/gary/demo/crud/v1/hello", method= RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonResponse updatePerson(@RequestParam(value="id", required=true) String id, HttpServletResponse response){
         PersonResponse personResponse = demoCrudService.deletePerson(id);
         response.setStatus(personResponse.getResponseStatus().value());
